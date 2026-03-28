@@ -39,45 +39,45 @@ void PrintarCadastrados(List<Aluno> turma){
   if(turma.isEmpty){
     print("Nenhum Aluno Cadastrado");
   }
-  turma.forEach((aluno){
+  for (var aluno in turma) {
     print("Matricula: ${aluno.matricula} | Aluno ${aluno.nome}");
-  });
+  }
 }
 
 void CalcularMediaTurma(List<Aluno> turma){
   double soma = 0;
-  turma.forEach((aluno) {
+  for (var aluno in turma) {
     soma += aluno.media;
-  });
+  }
   print("A media da turma é ${soma / turma.length}");
 }
 
 void CalcularMediaFeminina(List<Aluno> turma){
   double soma = 0;
   int qtd =0;
-  turma.forEach((aluna) {
+  for (var aluna in turma) {
     if(aluna.sexo == 'F'){soma += aluna.media;qtd++;}
-  });
+  }
   print("A média das alunas é ${soma / qtd}");
 }
 
 
 void PorcentagemAprovados(List<Aluno> turma){
   int aprovados =0;
-  turma.forEach((aluno){
+  for (var aluno in turma) {
     if(aluno.isAprovado()){
       aprovados++;
     }
-  });
+  }
   double porcentagem = (aprovados / turma.length)*100;
-  print("Porcentagem de aprovados: ${porcentagem}% ");
+  print("Porcentagem de aprovados: $porcentagem% ");
 }
 
 void MelhoresAlunosPGenero(List<Aluno> turma){
   Aluno? melhorMasculino;
   Aluno? melhorFeminino;
 
-  turma.forEach((aluno){
+  for (var aluno in turma) {
     if(aluno.sexo == 'M'){
       if(melhorMasculino ==null ||aluno.media > melhorMasculino!.media ){
         melhorMasculino = aluno;
@@ -88,7 +88,7 @@ void MelhoresAlunosPGenero(List<Aluno> turma){
         melhorFeminino = aluno;
       }
     }
-  });
+  }
 
   print("Matricula do melhor aluno: ${melhorMasculino!.matricula} | Matricula da melhor aluna: ${melhorFeminino!.matricula }");
 }

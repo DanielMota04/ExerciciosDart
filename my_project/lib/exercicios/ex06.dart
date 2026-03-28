@@ -8,11 +8,11 @@ void main(List<String> arguments){
     print("Digite seu palpite: ");
     palpite = int.parse(stdin.readLineSync()!);
     if(numero > palpite){
-      print("O número está entre ${palpite} - 100");
+      print("O número está entre $palpite - 100");
     }
     if(numero < palpite){
-      print("O número está entre 0 - ${palpite}");
+      print("O número está entre 0 - $palpite");
     }
   }
-  print("Parabéns, o número era ${numero}");
+  print("Parabéns, o número era $numero");
 }
