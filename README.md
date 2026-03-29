@@ -9,7 +9,7 @@ Questões resolvidas por:
 - Questão 7: Daniel
 - Questão 8: Lucca
 - Questão 9: Daniel
-- Questão 10:
+- Questão 10: Lucca
 - Questão 11: Lucca
 - Questão 12: Daniel
 - Questão 13:
