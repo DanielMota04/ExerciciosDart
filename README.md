@@ -18,5 +18,5 @@ Questões resolvidas por:
 - Questão 16: Davi
 - Questão 17: Davi
 - Questão 18: Davi
-- Questão 19:
-- Questão 20:
+- Questão 19: Guilherme
+- Questão 20: Guilherme
