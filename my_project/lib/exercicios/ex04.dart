@@ -6,34 +6,82 @@ void main(List<String> arguments){
   while(true){
     PrintarCadastrados(turma);
     print("Digite a matricula do aluno (00000 p/encerrar):");
-    String matricula = stdin.readLineSync()!;
+    String matricula = stdin.readLineSync()!.trim();
     if(matricula == '00000' ){break;}
 
-    print("Digite o nome do aluno:");
-    String nome = stdin.readLineSync()!;
+    String nome = VerificaNome();
+
+    String sexo = VerificaSexo();
     
-    print("Digite o sexo do aluno(M/F):");
-    String sexo = stdin.readLineSync()!.toUpperCase();
-    
-    print("Digite a nota 1 do aluno:");
-    double nota1 = double.parse(stdin.readLineSync()!);
-    print("Digite a nota 2 do aluno:");
-    double nota2 = double.parse(stdin.readLineSync()!);
-    print("Digite a nota 3 do aluno:");
-    double nota3 = double.parse(stdin.readLineSync()!);
+    double nota1 = VerificarNota(1);
+    double nota2 = VerificarNota(2);
+    double nota3 = VerificarNota(3);
     double media = (nota1 + nota2 + nota3) / 3;
-    print("Digite a quantidade de faltas do aluno:");
-    int qtdFaltas = int.parse(stdin.readLineSync()!);
+
+    int qtdFaltas = VerificarFaltas();
 
     Aluno aluno = Aluno(matricula,nome,sexo,nota1,nota2,nota3,media,qtdFaltas);
     turma.add(aluno);
   }
-
+  if(turma.isEmpty){
+    print("Nenhum Aluno Cadastrado");
+  }else{
   CalcularMediaTurma(turma);
   PorcentagemAprovados(turma);
   MelhoresAlunosPGenero(turma);
   CalcularMediaFeminina(turma);
+  }
 }
+
+String VerificaNome(){
+  while(true){
+    print("Digite o nome do aluno: ");
+    String resposta = stdin.readLineSync()!;
+    if(!resposta.trim().isEmpty){
+      return resposta;
+    }else{
+      print("A resposta está vazia");
+    }
+  }
+}
+String VerificaSexo(){
+  while(true){
+    print("Digite o sexo do aluno(M/F):");
+    String sexo = stdin.readLineSync()!.toUpperCase();
+    if(sexo == 'M' || sexo == 'F')return sexo;
+    print("Digite Novamente, A resposta só deve ser 'M' ou 'F'");
+  }
+  
+}
+
+double VerificarNota(int num){
+  while(true){
+    print("Digite a nota ${num} do aluno:");
+    String entrada = stdin.readLineSync()?? "";
+    double? nota = double.tryParse(entrada);
+    if (nota == null || nota < 0 || nota > 10) {
+      print("Erro! Digite um valor numérico entre 0 e 10.");
+    } else {
+      return nota;
+    }
+
+  }
+  
+}
+
+int VerificarFaltas(){
+  while(true){
+    print("Digite a quantidade de faltas do aluno:");
+    String entrada = stdin.readLineSync()?? "";
+    int? nota = int.tryParse(entrada);
+    if (nota == null) {
+      print("Erro! Digite um número inteiro");
+    } else {
+      return nota;
+    }
+  }
+}
+
 
 void PrintarCadastrados(List<Aluno> turma){
   if(turma.isEmpty){
@@ -58,7 +106,7 @@ void CalcularMediaFeminina(List<Aluno> turma){
   for (var aluna in turma) {
     if(aluna.sexo == 'F'){soma += aluna.media;qtd++;}
   }
-  print("A média das alunas é ${soma / qtd}");
+  qtd == 0? print("Nenhuma Aluna foi cadastrada"): print("A média das alunas é ${soma / qtd}");
 }
 
 
@@ -89,8 +137,9 @@ void MelhoresAlunosPGenero(List<Aluno> turma){
       }
     }
   }
-
-  print("Matricula do melhor aluno: ${melhorMasculino!.matricula} | Matricula da melhor aluna: ${melhorFeminino!.matricula }");
+  String matM = melhorMasculino!= null ? melhorMasculino.matricula : "Nenhum";
+  String matF = melhorFeminino!= null ? melhorFeminino.matricula : "Nenhuma";
+  print("Matricula do melhor aluno: ${matM} | Matricula da melhor aluna: ${matF }");
 }
 
 
