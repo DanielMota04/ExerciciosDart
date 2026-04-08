@@ -4,25 +4,73 @@ void main(List<String> arguments) {
   List<RecemNascido> maternidade = [];
   bool continuar = true;
   while (continuar) {
-    print("Digite o nome do recém-nascido: ");
-    String nome = stdin.readLineSync()!;
-    print("Digite o sexo de $nome(M/F):");
-    String sexo = stdin.readLineSync()!.toUpperCase();
-    print("Digite o peso de $nome");
-    double peso = double.parse(stdin.readLineSync()!);
+    String nome = VerificaNome();
+    String sexo = VerificaSexo(nome);
+    double peso = VerificarPeso(nome);
     RecemNascido bb = RecemNascido(nome, sexo, peso);
     maternidade.add(bb);
 
-    print("Deseja adicionar outro recém-nascido?(S/N)");
-    String decisao = stdin.readLineSync()!.toUpperCase();
+    String decisao = VerificaContinuacao();
     if(decisao == 'N') break;
   }
-
+  if(maternidade.isEmpty){
+    print("Nenhum recém-nascido cadastrado");
+    return;
+  }else{
   for (var bb in maternidade) {
     print("Nome: ${bb.nome} | Sexo: ${bb.sexo} | Classificação: ${bb.classificacao}");
   }
   PrintFemMaiorPeso(maternidade);
   PercentPorClassificacao(maternidade);
+  }
+}
+String VerificaContinuacao() {
+  while (true) {
+    print("Deseja adicionar outro recém-nascido? (S/N) ");
+    String entrada = stdin.readLineSync()!.toUpperCase();
+    
+    if (entrada == 'S' || entrada == 'N') {
+      return entrada;
+    }
+    
+    print("Responda com apenas 'S' para sim ou 'N' para não.");
+  }
+}
+
+String VerificaNome(){
+  while(true){
+    print("Digite o nome do recém-nascido: ");
+    String resposta = stdin.readLineSync()!;
+    if(!resposta.trim().isEmpty){
+      return resposta;
+    }else{
+      print("A resposta está vazia");
+    }
+  }
+}
+String VerificaSexo(String nome){
+  while(true){
+    print("Digite o sexo de ${nome} (M/F):");
+    String sexo = stdin.readLineSync()!.toUpperCase();
+    if(sexo == 'M' || sexo == 'F')return sexo;
+    print("Digite Novamente, A resposta só deve ser 'M' ou 'F'");
+  }
+  
+}
+
+double VerificarPeso(String nome){
+  while(true){
+    print("Digite o peso de ${nome}:");
+    String entrada = stdin.readLineSync()?? "";
+    double? peso = double.tryParse(entrada);
+    if (peso == null || peso < 0 ) {
+      print("Erro! Digite um peso válido");
+    } else {
+      return peso;
+    }
+
+  }
+  
 }
 
 void PrintFemMaiorPeso(List<RecemNascido> maternidade){
@@ -34,10 +82,15 @@ void PrintFemMaiorPeso(List<RecemNascido> maternidade){
       }
     }
   }
-  print("A recém-nascida de maior peso é ${maior?.nome}");
+  if(maior!= null) {
+    print("A recém-nascida de maior peso é ${maior.nome} (${maior.peso}kg)");
+  } else {
+    print("Nenhuma recém-nascida do sexo feminino foi cadastrada.");
+  }
 }
 
 void PercentPorClassificacao(List<RecemNascido> maternidade){
+  
   double qtdBaixoP=0;
   double qtdNormal=0;
   double qtdAltoP=0;
